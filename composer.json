@@ -1,11 +1,11 @@
 {
   "name": "larsgowebdev/wp-battery",
-  "description": "WP-Battery Theme Development Framework",
+  "description": "WordPress theme development framework, uniting ACF Pro, Timber and Vite",
   "type": "wordpress-muplugin",
   "license": [
     "GPL-2.0-or-later"
   ],
-  "version": "0.6.5",
+  "version": "0.6.6",
   "minimum-stability": "dev",
   "prefer-stable": true,
   "authors": [

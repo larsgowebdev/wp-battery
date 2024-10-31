@@ -47,8 +47,13 @@ Blocks, pages, menus and options can be added following simple conventions. Addi
 
 ## Installation
 
-1. Place the plugin in your `wp-content/mu-plugins` directory
-2. Create a new instance of WP-Battery in your theme's `functions.php`
+In a WordPress composer based setup with Bedrock, this plugin will be automatically symlinked into your web/app/mu-plugins directory, and become available in your WP.
+
+```bash
+composer require larsgowebdev/wp-battery
+```
+
+Create a new instance of WP-Battery in your theme's `functions.php`
 
 ## Usage
 
