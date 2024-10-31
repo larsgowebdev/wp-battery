@@ -1,0 +1,31 @@
+{
+  "name": "larsgowebdev/wp-battery",
+  "description": "WP-Battery Theme Development Framework",
+  "type": "wordpress-muplugin",
+  "license": [
+    "GPL-2.0-or-later"
+  ],
+  "version": "0.6.5",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "authors": [
+    {
+      "name": "Lars Goossens",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=8.1",
+    "roots/wordpress": ">= 6.6.1",
+    "roots/wp-config": ">=1.0.0 <=1.1.0",
+    "oscarotero/env": ">=2.1 <3.0"
+  },
+  "suggest": {
+    "larsgowebdev/wp-battery-cli": "Adds CLI utilities to help with faster generating of blocks, pages and other stuff."
+  },
+  "autoload": {
+    "psr-4": {
+      "Larsgowebdev\\WPBattery\\" : "Classes/"
+    }
+  }
+}
