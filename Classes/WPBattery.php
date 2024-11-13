@@ -110,6 +110,9 @@ class WPBattery
         if ($themeSettings->getDisableComments() === true) {
             ThemeSetup::disableComments();
         }
+        if (!empty($themeSettings->getAddMetaTags())) {
+            ThemeSetup::addMetaTags($themeSettings->getAddMetaTags());
+        }
 
         if ($themeSettings->getEnableViteAssets() === true) {
             ThemeSetup::enableViteBuild(

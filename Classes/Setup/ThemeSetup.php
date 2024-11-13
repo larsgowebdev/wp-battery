@@ -284,4 +284,13 @@ class ThemeSetup
             return $properties;
         }, 10, 2 );
     }
+
+    public static function addMetaTags(array $tags): void
+    {
+        foreach ($tags as $tag => $content) {
+            add_action('wp_head', function () use ($tag, $content) {
+                echo '<meta name="' . $tag . '" content="' . $content . '">';
+            });
+        }
+    }
 }

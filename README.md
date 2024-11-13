@@ -378,6 +378,9 @@ $wpBattery = new WPBattery(
         'contactForm7Templates' => [
             '48899ec' => 'contact-form.twig',
         ],
+        'addMetaTags' => [
+            'viewport' => 'width=device-width, initial-scale=1, shrink-to-fit=no',
+        ],
     ],
     enableCache: true
 );
@@ -497,6 +500,14 @@ Map Contact Form 7 forms to Twig templates:
 'contactForm7Templates' => [
     '48899ec' => 'contact-form.twig',  // Form hash => template path
 ]
+```
+
+#### Additional Head Meta Tags (`addMetaTags`)
+Provide additional meta tags for wp_head as an array (key = tag name, value = tag content).
+```php
+'addMetaTags' => [
+    'viewport' => 'width=device-width, initial-scale=1, shrink-to-fit=no',
+],
 ```
 
 ## Cache Management

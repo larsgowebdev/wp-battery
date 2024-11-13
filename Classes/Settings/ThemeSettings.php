@@ -20,6 +20,7 @@ class ThemeSettings
     protected array $includeAdminCSS = [];
     protected array $includeAdminJS = [];
     protected array $contactForm7Templates = [];
+    protected array $addMetaTags = [];
 
     public function __construct(array $settings)
     {
@@ -59,6 +60,8 @@ class ThemeSettings
             = (array) ($settings['includeAdminJS'] ?? $this->includeAdminJS);
         $this->contactForm7Templates
             = (array) ($settings['contactForm7Templates'] ?? $this->contactForm7Templates);
+        $this->addMetaTags
+            = (array) ($settings['addMetaTags'] ?? $this->addMetaTags);
     }
 
     public function getRegisterBlocks(): bool
@@ -220,5 +223,14 @@ class ThemeSettings
     {
         $this->contactForm7Templates = $contactForm7Templates;
     }
-    
+
+    public function getAddMetaTags(): array
+    {
+        return $this->addMetaTags;
+    }
+
+    public function setAddMetaTags(array $addMetaTags): void
+    {
+        $this->addMetaTags = $addMetaTags;
+    }
 }
