@@ -7,6 +7,8 @@ class ThemeSettings
     protected bool $registerBlocks = true;
     protected bool $registerMenus = true;
     protected bool $registerOptions = true;
+    protected bool $registerCustomPostTypes = true;
+    protected bool $registerTaxonomies = true;
     protected bool $enableACFSync = true;
     protected bool $enableViteAssets = true;
     protected bool $allowSVGUploads = true;
@@ -30,6 +32,10 @@ class ThemeSettings
             = (bool) ($settings['registerMenus'] ?? $this->registerMenus);
         $this->registerOptions
             = (bool) ($settings['registerOptions'] ?? $this->registerOptions);
+        $this->registerCustomPostTypes
+            = (bool) ($settings['registerCustomPostTypes'] ?? $this->registerCustomPostTypes);
+        $this->registerTaxonomies
+            = (bool) ($settings['registerTaxonomies'] ?? $this->registerTaxonomies);
         $this->enableACFSync
             = (bool) ($settings['enableACFSync'] ?? $this->enableACFSync);
         $this->themeSupport
@@ -92,6 +98,26 @@ class ThemeSettings
     public function setRegisterOptions(bool $registerOptions): void
     {
         $this->registerOptions = $registerOptions;
+    }
+
+    public function getRegisterCustomPostTypes(): bool
+    {
+        return $this->registerCustomPostTypes;
+    }
+
+    public function setRegisterCustomPostTypes(bool $registerCustomPostTypes): void
+    {
+        $this->registerCustomPostTypes = $registerCustomPostTypes;
+    }
+
+    public function getRegisterTaxonomies(): bool
+    {
+        return $this->registerTaxonomies;
+    }
+
+    public function setRegisterTaxonomies(bool $registerTaxonomies): void
+    {
+        $this->registerTaxonomies = $registerTaxonomies;
     }
 
     public function getEnableACFSync(): bool

@@ -98,6 +98,12 @@ class WPBattery
         if ($themeSettings->getRegisterOptions() === true) {
             ThemeSetup::registerOptionsPages();
         }
+        if ($themeSettings->getRegisterCustomPostTypes() === true) {
+            ThemeSetup::registerCustomPostTypes();
+        }
+        if ($themeSettings->getRegisterTaxonomies() === true) {
+            ThemeSetup::registerTaxonomies();
+        }
         if ($themeSettings->getEnableACFSync() === true) {
             ThemeSetup::enableACFSync();
         }

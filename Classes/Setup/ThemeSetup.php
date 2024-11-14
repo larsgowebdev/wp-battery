@@ -91,6 +91,65 @@ class ThemeSetup
         });
     }
 
+    public static function registerCustomPostTypes(): void
+    {
+        add_action(
+            'init',
+            function() {
+
+                $postTypes = [];
+
+                $postTypesFiles = PathScannerUtility::scanForCompatibleFiles(
+                    PathUtility::getPostTypesDirectory(),
+                    '',
+                    'php'
+                );
+
+                foreach ($postTypesFiles as $postTypeFile) {
+                    $postTypeFileContent = include_once($postTypeFile);
+                    if (is_array($postTypeFileContent)) {
+                        $postTypes = array_merge_recursive($postTypes, $postTypeFileContent);
+                    }
+                }
+
+                foreach ($postTypes as $postTypeName => $postTypeConfiguration) {
+                    register_post_type($postTypeName, $postTypeConfiguration);
+                }
+            },
+            627
+        );
+    }
+
+    public static function registerTaxonomies(): void
+    {
+        add_action(
+            'init',
+            function() {
+
+                $taxonomies = [];
+
+                $taxonomyFiles = PathScannerUtility::scanForCompatibleFiles(
+                    PathUtility::getTaxonomiesDirectory(),
+                    '',
+                    'php'
+                );
+
+                foreach ($taxonomyFiles as $taxonomyFile) {
+                    $taxonomyFileContent = include_once($taxonomyFile);
+                    if (is_array($taxonomyFileContent)) {
+                        $taxonomies = array_merge_recursive($taxonomies, $taxonomyFileContent);
+                    }
+                }
+
+                foreach ($taxonomies as $taxonomyName => $taxonomyConfiguration) {
+                    $forPostTypes = $taxonomyConfiguration['for_post_types'] ?? [];
+                    register_taxonomy($taxonomyName, $forPostTypes, $taxonomyConfiguration);
+                }
+            },
+            626
+        );
+    }
+
     public static function enableACFSync(): void
     {
         add_filter('acf/settings/save_json', function ($data) {

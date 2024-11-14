@@ -20,6 +20,9 @@ Blocks, pages, menus and options can be added following simple conventions. Addi
 - **Menus and Option Pages**:
     - Automatic registration of WP menus and [ACF Pro Options Pages](https://www.advancedcustomfields.com/resources/options-page/)
     - Simple file-based configuration
+- **Custom Post Type and Taxonomy Registration**:
+    - Register your custom post types and taxonomies from separate configuration files
+    - Simplified registration based on structure and convention
 - **Enable [Vite.js](https://vite.dev/) for your WordPress frontend**:
     - WP-Battery is ready for [Vite-Asset-Collector-WP](https://github.com/larsgowebdev/vite-asset-collector-wp)
 - **Asset Management**:

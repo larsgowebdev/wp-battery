@@ -12,8 +12,11 @@ class PathUtility
     public static string $pagesDir = 'pages';
     public static string $cf7templatesDir = 'cf7-templates';
     public static string $templatePartsDir = 'template-parts';
+    private static string $postTypesDir = 'post-types';
+    private static string $taxonomiesDir = 'taxonomies';
 
     public static string $acfSyncDir = 'acf-sync';
+
 
     /**
      * returns the full path to the theme directory
@@ -54,6 +57,36 @@ class PathUtility
             self::$wpbThemeSegment .
             self::$directorySeparator .
             self::$optionsDir;
+    }
+
+    /**
+     * returns the full path to the custom post type directory inside the wpb theme files
+     * ... NO trailing slash
+     *
+     * @return string
+     */
+    public static function getPostTypesDirectory(): string
+    {
+        return self::getThemeDirectory() .
+            self::$directorySeparator .
+            self::$wpbThemeSegment .
+            self::$directorySeparator .
+            self::$postTypesDir;
+    }
+
+    /**
+     * returns the full path to the taxonomies directory inside the wpb theme files
+     * ... NO trailing slash
+     *
+     * @return string
+     */
+    public static function getTaxonomiesDirectory(): string
+    {
+        return self::getThemeDirectory() .
+            self::$directorySeparator .
+            self::$wpbThemeSegment .
+            self::$directorySeparator .
+            self::$taxonomiesDir;
     }
 
     /**
