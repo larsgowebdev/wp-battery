@@ -245,13 +245,23 @@ If you need to add or modify menus manually or just want to dig deeper:
 1. Create a folder `menus` in your `wpb` directory
 2. Add PHP files for each menu configuration:
 
+Menu configuration files return an associative array defining the menu structure:
+- the menu name/ identifier as *key*
+- under the key *items*, you can predefine items always added to the menu
+- see [wp_create_nav_menu()](https://developer.wordpress.org/reference/functions/wp_create_nav_menu/) and [wp_update_nav_menu_item()](https://developer.wordpress.org/reference/functions/wp_update_nav_menu_item/)
+
 ```php
 <?php
 // menus/main-menu.php
 return [
-    'Main Menu' => [
-        'items' => []
-    ]
+    'Menu Name' => [
+        'items' => [
+            [
+                'menu-item-title' => 'New Menu Item Title',
+                'menu-item-url' => 'http://example.com/new-url',
+            ],
+        ],
+    ],
 ];
 ```
 
@@ -270,18 +280,115 @@ If you need to add or modify menus manually or just want to dig deeper:
 1. Create a folder `options` in your `wpb` directory
 2. Add PHP files for each options page:
 
+Options configuration files return an associative array defining the ACF options page.
+- the option page identifier as *key*
+- the configuration as *value* - internally, [acf_add_options_page()](https://www.advancedcustomfields.com/resources/acf_add_options_page/) is used
+
 ```php
 <?php
 // options/site-settings.php
 return [
-    'sitewide' => [
-        'page_title'    => __('Header and Footer'),
-        'menu_title'    => __('Header and Footer'),
-        'menu_slug'     => 'theme-sitewide',
-        'capability'    => 'edit_posts',
-        'position'      => '25',
-        'redirect'      => false
+    'identifier' => [
+        'page_title' => 'Page Title',
+        'menu_title' => 'Menu Title',
+        'menu_slug'  => 'menu-slug',
+        'capability' => 'edit_posts',
+        'position'   => '25',
+        'redirect'   => false
     ]
+];
+```
+
+### Registering Custom Post Types
+
+> 💡 **Quick Start (recommended)**  
+> Create custom post types easily using [WP-Battery CLI](https://github.com/larsgowebdev/wp-battery-cli):
+> ```bash
+> wp create-wpb-post-type --name=product --namespace=my-theme
+> ```
+
+#### In-Depth: Register custom post types manually
+
+If you need to add or modify post types manually or just want to dig deeper:
+
+1. Create a folder `post-types` in your `wpb` directory
+2. Add PHP files for each custom post type
+
+Custom Post Types configuration files return an associative array:
+- the post type name as *key* (in this example 'product')
+- the configuration as *value* - consult the [WordPress Post Type API](https://developer.wordpress.org/plugins/post-types/registering-custom-post-types/) for that
+
+```php
+<?php
+// post-types/post-type-product.php
+return [
+    'product' => [
+        'label'               => __( 'Products', 'my-theme'),
+        'description'         => __( 'Products offered in the store', 'my-theme'),
+        'labels'              => [
+            'name'                => _x( 'Products', 'Post Type General Name', 'my-theme'),
+        ],
+        // Features this CPT supports in Post Editor
+        'supports'            => [
+            'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', 'page-attributes'
+        ],
+        // You can associate this CPT with a taxonomy or custom taxonomy.
+        'taxonomies'          => [
+            'product-category', 'product-location'
+        ],
+        'hierarchical'        => true,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_nav_menus'   => true,
+        'show_in_admin_bar'   => true,
+        'capability_type'     => 'post',
+        // read the WP developer docs for more options
+    ],
+];
+```
+
+### Registering Custom Taxonomies
+
+> 💡 **Quick Start (recommended)**  
+> Create custom post types easily using [WP-Battery CLI](https://github.com/larsgowebdev/wp-battery-cli):
+> ```bash
+> wp create-wpb-taxonomy --name=product-category --namespace=my-theme --post-type=product
+> ```
+
+#### In-Depth: Register taxonomies manually
+
+If you need to add or modify post types manually or just want to dig deeper:
+
+1. Create a folder `taxonomies` in your `wpb` directory
+2. Add PHP files for each custom taxonomy you want to add
+
+Taxonomy configuration files return an associative array:
+- the taxonomy name as *key* (in this example 'product-category')
+- the configuration array as *value* - make sure to consult the WordPress API documentation for [register_taxonomy()](https://developer.wordpress.org/reference/functions/register_taxonomy/)
+- **important**: To connect a taxonomy with a post-type, the array item 'for_post_types' is required, which will be converted to the second parameter for register_taxonomy (Object type or array of object types with which the taxonomy should be associated.)
+
+```php
+<?php
+// taxonomies/taxonomy-product-category.php
+return [
+    'product-category' => [
+        'labels' => [
+            'name' => _x( 'Product Categories', 'my-theme' ),
+        ],
+        'hierarchical' => true,
+        'show_ui' => true,
+        'public' => true,
+        'show_in_rest' => true,
+        'show_admin_column' => true,
+        'query_var' => true,
+        // consult the WP docs on register_taxonomy() for more options.
+        // 
+        // for_post_types is not part of the WordPress API,
+        // but is required for WP-Battery's taxonomy registration mechanism
+        'for_post_types' => [
+            'product'
+        ],
+    ],
 ];
 ```
 
