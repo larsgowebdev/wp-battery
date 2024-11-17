@@ -21,6 +21,10 @@ class PageRenderer
         $context['options'] = self::getOptionsForTimber();
         $context['menus'] = self::getMenusForTimber();
 
+        if (function_exists('get_fields')) {
+            $context['fields'] = get_fields();
+        }
+
         add_filter('timber/locations', function ($paths) use ($pageTitle) {
             $paths[] = [
                 PathUtility::getDirectoryOfPage($pageTitle),
