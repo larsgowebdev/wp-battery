@@ -49,40 +49,43 @@ class PathScannerUtility
 
     public static function scanForCompatibleFiles(string $directory, string $filename = '', string $extension = 'php'): array
     {
-        {
-            $files = [];
-            $pattern = '';
-
-            if ($filename) {
-                // Escape the filename to avoid issues with special characters in regex
-                $escapedFilename = preg_quote($filename, '/');
-                $pattern = '/^.+\/' . $escapedFilename . '$/i';
-            } elseif ($extension) {
-                // Escape the extension to avoid issues with special characters in regex
-                $escapedExtension = preg_quote($extension, '/');
-                $pattern = '/^.+\.' . $escapedExtension . '$/i';
-            }
-
-            if (!$pattern) {
-                throw new \InvalidArgumentException("Either filename or extension must be provided.");
-            }
-
-            // Create a RecursiveDirectoryIterator to scan the directory
-            $directoryIterator = new RecursiveDirectoryIterator($directory, FilesystemIterator::SKIP_DOTS);
-
-            // Use RecursiveIteratorIterator to traverse the directories recursively
-            $iterator = new RecursiveIteratorIterator($directoryIterator);
-
-            // Use RegexIterator to filter files based on the constructed pattern
-            $regexIterator = new RegexIterator($iterator, $pattern, RegexIterator::GET_MATCH);
-
-            // Collect all matched file paths
-            foreach ($regexIterator as $file) {
-                $files[] = $file[0];
-            }
-
-            return $files;
+        // Early return if directory doesn't exist
+        if (!is_dir($directory) || !file_exists($directory)) {
+            return [];
         }
+
+        $files = [];
+        $pattern = '';
+
+        if ($filename) {
+            // Escape the filename to avoid issues with special characters in regex
+            $escapedFilename = preg_quote($filename, '/');
+            $pattern = '/^.+\/' . $escapedFilename . '$/i';
+        } elseif ($extension) {
+            // Escape the extension to avoid issues with special characters in regex
+            $escapedExtension = preg_quote($extension, '/');
+            $pattern = '/^.+\.' . $escapedExtension . '$/i';
+        }
+
+        if (!$pattern) {
+            throw new \InvalidArgumentException("Either filename or extension must be provided.");
+        }
+
+        // Create a RecursiveDirectoryIterator to scan the directory
+        $directoryIterator = new RecursiveDirectoryIterator($directory, FilesystemIterator::SKIP_DOTS);
+
+        // Use RecursiveIteratorIterator to traverse the directories recursively
+        $iterator = new RecursiveIteratorIterator($directoryIterator);
+
+        // Use RegexIterator to filter files based on the constructed pattern
+        $regexIterator = new RegexIterator($iterator, $pattern, RegexIterator::GET_MATCH);
+
+        // Collect all matched file paths
+        foreach ($regexIterator as $file) {
+            $files[] = $file[0];
+        }
+
+        return $files;
     }
 
 
