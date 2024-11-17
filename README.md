@@ -166,6 +166,11 @@ function render_project_info_additional($context)
 ```
 > $context will be made available in your block's twig template
 
+> By Default, your block twig template will have the following variables available:
+> - field: All of the ACF field data
+> - attributes, previewFieldObjects: (ACF) Block metadata, can be used for a customized editor preview.
+> - isPreview: *true* when rendering the block preview in the editor, can be used for a customized editor preview. Irrelevant for frontend rendering.
+
 ### Creating Page Templates
 
 > 💡 **Quick Start (recommended)**  
@@ -229,6 +234,12 @@ function render_standard2($context)
 ```
 
 > $context will be made available in your page's twig template
+
+> By Default, your page twig template will have the following variables available:
+> - post: The Post object of the current page
+> - options: Custom values from options pages
+> - menus: Array of all menus that you registered (see below). 
+> - fields: ACF fields attached to this page (see [get_fields()](https://www.advancedcustomfields.com/resources/get_fields/))
 
 ### Registering Menus
 
